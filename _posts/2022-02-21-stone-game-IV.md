@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title:  "Stone Game IV"
 date:   2022-02-21 22:36:07 -0400
 categories: algorithms leetcode
