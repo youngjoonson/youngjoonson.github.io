@@ -17,7 +17,7 @@ Given a positive integer `n`, return `true` if and only if Alice wins the gam
 ## Notes
 The problem implicit that a winner can be determined by givnen the number `n` of stones. Let's say there is only one stone given (`n==1`). Since only available non-zero **square** number is `1`, Alice will take `1` stone and then Bob will get `0` stone so lose the game. In this case, it's found that `1` is must-win case and `0` is must-lose case. 
 
-When the number of stones is `2`, Alice will take one stone again since it's till the only available non-zero square number. This gives bob a chance to get `1` stone which is must-win case. So Alice will lose in this case. On the other hand, Alice will win since once Alice take a stone (which is still only non-zero square number), Bob will take `2` stones that is must-lose case.
+When the number of stones is `2`, Alice will take one stone again since it's till the only available non-zero square number. This gives bob a chance to get `1` stone which is must-win case. So Alice will lose in this case. On the other hand, if Alice gets `3` stones, Alice will win this time since Alice can take `1` stone (which is still only non-zero square number), Bob will take `2` stones that is must-lose case.
 
 However, `4` stones give one more choice to Alice. Alice can take `1` or `4` stones and Bob can get `3` or `0` stone. Since `0` is must-lose case, Alice will take `4` stones and win the game.
 
