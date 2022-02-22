@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title:  "Stone Game IV"
 date:   2022-02-21 22:36:07 -0400
-categories: algorithms leetcode
+categories: algorithms
 ---
 ### [link(Leat Code)](https://leetcode.com/problems/stone-game-iv/)
 ## Decription

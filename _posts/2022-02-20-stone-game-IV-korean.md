@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title:  "Stone Game IV (한국어)"
 date:   2022-02-20 17:01:07 -0400
-categories: algorithms leetcode
+categories: algorithms
 ---
 ### [link(Leat Code)](https://leetcode.com/problems/stone-game-iv/)
 ## Decription
