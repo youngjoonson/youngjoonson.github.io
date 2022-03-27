@@ -13,7 +13,9 @@ You must solve the problem **without** modifying the array `nums` and uses only 
 ## Notes
 입력된 배열에서 중복된 숫자를 찾는 것은 쉽다. 숫자들을 하나씩 `HashSet` 등의 중복을 허용하지 않는 DS에 집어넣다 보면 linear time으로 해결되는 문제다. 그러나, 입력된 데이터를 조작하면 안된다는 조건과 함께, Constant extra space를 써야 한다는 고약한 조건이 붙어있다. 위에 언급한 방법은 **모든** 숫자를 **하나씩** 넣어보기 때문에, 최악의 경우 모든 숫자를 다 넣어봐야 중복된 수가 나온다. 즉 `O(n)`의 Space complexity를 갖는다.
 
-Leetcode 에는 고맙게도 이에 관한 7가지 접근법을 소개하는데, 처음 4가지는 위에 조건을 만족하지는 않지만, 자주 쓰이는 테크닉이라 알아두면 좋을것 같다고 한다. 마지막 Two pointer 방식은 LinkedList 관련 문제에도 많이 쓰이고, 그림이 없으면 설명하기 힘들어서 나중에 포스팅 해야지.
+Leetcode 에는 고맙게도 이에 관한 7가지 접근법을 소개하는데, 처음 4가지는 위에 조건을 만족하지는 않지만, 자주 쓰이는 테크닉이라 알아두면 좋을것 같다고 한다. 마지막 Two pointer 방식은 LinkedList 관련 문제에도 많이 쓰이고, 그림이 없으면 설명하기 힘들어서 나중에... 6번째 Sum of set bits 도..
+
+사실 문제의 조건을 만족하는 해결법은 5번이기때문에 그부분만 봐도 될거같다.
 
 ### 1. Sort
 간단하게, 입력된 배열을 크기순으로 정렬을 하고, 앞에서 부터 하나씨 찾아보는 방식. 직관적이고 간단하게 생각할 수 있지만 위에 조건을 만족하지도 않고, 대체로 최선의 해법과는 항상 거리가 좀 있더라
@@ -52,7 +54,7 @@ Leetcode 에는 고맙게도 이에 관한 7가지 접근법을 소개하는데,
 
 ---
 
-### 4. Array as HashMap (Recursive)
+### 4-1. Array as HashMap (Recursive)
 위의 방식과 비슷한 접근법이나, 본격적으로 입력된 배열을 조작한다. 포인트는 위에 비슷하다. 
 
 #### Algorithm
@@ -70,10 +72,31 @@ Leetcode 에는 고맙게도 이에 관한 7가지 접근법을 소개하는데,
 
 ---
 
-### 5. Array as HashMap (Iterative)
+### 4-2. Array as HashMap (Iterative)
 알고리즘 자체는 위와 정확히 같다. 다만 단계 4번 반복을 Recursive가 아닌 Iteraton으로 하는것. 훨씬 간단하고 보기 좋다. 이정도 반복을 Recursive로 하는게 사실 말이 안됨.
 
 #### Analysis
 - Time Complexity O(n). 3번 Negative Marking이랑 같은 이유
 - Space Complexity O(n), Recursive 방식이므로, 메소드 또는 함수의 호출이 쌓이다 보면 `O(n)`까지 갈 수 있다.
 
+---
+
+### 5 Binary Search
+처음에는 Binary Search를 떠올리기 쉽지 않았다. Binary Search는 정렬된 배열등읙 구조에 쓰일수 있기 때문에 당여니 정렬 `O(n log n)`이 선행 될것이라 생각했기 때문이다. 이번 접근법은 입력된 배열에서 파생된 다른 것을 `Binary search` 한다.
+
+#### Algorithm
+범위 `[1,n]`의 수들이 중복되지 않게 있다고 생각해보자. n=5 일때엔, [1,2,3,4,5] 인데, 이때에 눈여겨 볼만한 점은 임의 숫자 n보다 같거나 작은 수의 개수 `c(n)`는 n이라는것. `c(n) == c` 즉 1보단 같거나 작은 수는 1개, 4보다 작거나 같은 수느 총 4개 있다는 점이다. 
+이때에 중복되는 수가 추가된 경우를 보자. 4가 중복된 격우 배열은 [1,2,3,4,4,5]가 될 수 있는데, 다시 각 숫자에 따른 c(n)을 보면 n>=4 일때 c(n)>n 인 점을 볼 수 있다. 여기서 포인트는 c(n)>n인 경우가 n==4일때가 아닌 n>=4인 것이다. 이는 c(n) >= c(n-1)+1 이기 때문인데, 간단히 말하면, 중복된 수, 4, 는 이후로도, 5 일때, 에도 같거나 작은 수로서 카운트 되기 때문이다.
+배열 [1,2,3,4,5]의 각 값을 위의 배열에 대하여, c(n)==n으로 치환하면, [true,true,true,false,false]이 된다. 그러므로 이번 접근법은 ***각 숫자의 범위 배열 [1,n]에서, c(n)>n이 되는 최소값*** 을 구하는 것이된다.
+
+1. 초기 범위를 [1,n]으로 놓는다. start = 1, end = n
+2. 중간값을 계산한다 m = (start+end)/2
+3. 입력된 배열에서 m보다 같거나 작은 수의 개수 c(n)을 구한다.
+4. c(n)==m 이면, start = m+1으로 범위를 재조정한다.
+5. c(n)>m 이면, end=m으로 범위를 재조정 한다.
+6. start==end가 될 때까지, 2번 단계도 돌아가 반복한다
+#### Analysis
+- Time complexity: O(n log n), binary search로 O(log n)만큼 반복을 하는데, 매 번 C(n)을 계산하는데, O(n)의 시간이 걸린다.
+- Space complexity: O(1)
+
+입력된 배열을 변경하지 않았고, constant space complexity로 해결됐다.
