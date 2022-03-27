@@ -11,6 +11,6 @@ paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 ---
 ## Dev Blogs
-I'm posting something about **Spring framework**, **Reacj JS**, **Firebase**.. **Golang**.. etc..
+I'm posting something about **Algorithm**, **Spring framework**, **Reacj JS**, **Firebase**.. **Golang**.. etc..
 
-You may find something you're looking for.
+You may find something valuable.
